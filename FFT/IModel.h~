@@ -1,0 +1,93 @@
+#ifndef IMODEL_H_INCLUDED
+#define IMODEL_H_INCLUDED
+
+#include <complex>
+#include <iostream>
+#include <boost/function.hpp>
+#include <boost/shard_ptr.hpp>
+#include <boost/numeric/ublas/vector.hpp>
+#include <boost/date_time/gregorian/gregorian_types.hpp>
+
+namespace fft {
+    namespace ublas = boost/numeric/ublas;
+    namespace  boost::gregorian::date date_type;
+
+    class IShortRate {
+    public:
+        virtual ~IShortRate() = 0;
+
+        double operator()(const date_type date) const;
+        
+    private:
+        double doOperator(const date_type date) const = 0;
+
+        virtual IShortRate* doClone() const = 0;
+    };
+
+    double dayCountFraction365(const date_type startDate,
+            const date_type endDate);
+
+    class IModel {
+    public:
+        virtual ~IModel() = 0;
+
+        std::complex<double> calcCharacteristicFunction(
+                const double logUnderlying) const; 
+
+    private:
+        virtual std::complex<double> doCalcCharacteristicFunction(
+                const double logUnderlying) const = 0;
+
+        virtual IModel* doClone() const = 0;
+
+    };
+
+    class IPayoff {
+    public:
+        virtual ~IPayoff() = 0;
+
+        double operator()(double underlying) const;
+
+    private:
+        virtual double doOperator(double underlying) const = 0;
+
+        virtual IPayoff* doClone() const = 0;
+    };
+
+    class IOption {
+    public:
+        virtual ~IOption() = 0;
+
+        double payoff(const double underlying) const;
+
+        date_type expiryDate() const;
+
+    private:
+        virtual double doPayoff(double underlying) const = 0;
+
+        virtual date_type doExpiryDate() const = 0;
+
+        virtual IOption* doClone() const = 0;
+    };
+
+    ublas::vector<std::complex<double> >
+        fft(ublas::vector<std::complex<double> > x);
+
+    class IFourierTransformSolver {
+    public:
+        virtual ~IFourierTransformSolver() = 0;
+
+        ublas::vector<double> solve(
+                const double spot, 
+                const double upperStrike,
+                const std::size_t numberOfDivisionPower) const;
+    private:
+        virtual IFourierTransformSolver* doClone() const = 0;
+        virtual ublas::vector<double> doSolve(
+                const double spot, 
+                const double upperStrike,
+                const std::size_t numberOfDivisionPower) const = 0;
+    };
+} // namespace fft 
+
+#endif // IMODEL_H_INCLUDED
