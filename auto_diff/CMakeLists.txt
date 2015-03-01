@@ -8,6 +8,9 @@ set(CMAKE_CXX_FLAGS "${CMAXE_CXX_FLAGS} -Wall")
 
 set(sources 
    main.cpp 
+   DualTest.cpp
+   PolynomialTest.cpp
+   JacobianTest.cpp
    )
 add_executable(test ${sources})
 target_link_libraries(test pthread)

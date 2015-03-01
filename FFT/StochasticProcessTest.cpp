@@ -14,7 +14,8 @@ TEST_F(StochasticProcessTest, testLogNormalSdeDrift) {
     const double initialValue = 100.0;
     const finance::NormalProcess process(mu, sigma);
     const double state = 2.0;
+    const finance::date_type date(2014, 2, 4);
 
-    //ASSERT_THAT(process(date), Eq(0.0));
+    ASSERT_THAT(finance::mean(process, date), Eq(mu / 365.0));
 }
 

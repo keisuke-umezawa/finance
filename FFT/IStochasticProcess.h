@@ -5,15 +5,15 @@
 #include "ISde.h"
 
 namespace finance {
-    typedef boost::gregorian::date date_type;
+    typedef boost::gregorian::date date_t;
 
     class IStochasticProcess {
     public:
         virtual ~IStochasticProcess() {}
 
-        double operator()(const date_type& time) const
+        double operator()(const date_t& time) const
         {
-            return doOperator(time);
+            return apply(time);
         }
 
         boost::shared_ptr<IStochasticProcess> clone() const
@@ -22,7 +22,7 @@ namespace finance {
         }
 
     private:
-        virtual double doOperator(const date_type& time) const = 0;
+        virtual double apply(const date_t& time) const = 0;
 
         virtual IStochasticProcess* doClone() const = 0;
 
@@ -31,7 +31,7 @@ namespace finance {
     class NormalProcess : public IStochasticProcess {
     public:
         explicit NormalProcess(const double mu, const double sigma,
-            const double initialValue, const date_type& initialDate)
+            const double initialValue, const date_t& initialDate)
         : _sde(mu, sigma), _initialValue(initialValue), 
             _initialDate(initialDate) 
         {
@@ -45,9 +45,10 @@ namespace finance {
         }
 
     private:
-        virtual double doOperator(const date_type& time) const
+        virtual double apply(const date_t& time) const
         {
-            return _constant;
+            // TODO
+            return 0.0;
         }
 
         virtual NormalProcess* doClone() const
@@ -56,8 +57,8 @@ namespace finance {
         }
 
         const NormalSde _sde;
-        const double _initialValue;
-        const date_type _initialDate;
+        double _initialValue;
+        date_t _initialDate;
     };
 
 } // namespace finance
