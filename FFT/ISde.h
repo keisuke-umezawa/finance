@@ -5,33 +5,33 @@
 #include "IDeterministicProcess.h"
 
 namespace finance {
-    typedef boost::gregorian::date date_type;
+    typedef boost::gregorian::date date_t;
 
     class ISde {
     public:
         virtual ~ISde() {}
 
-        double drift(const date_type& time, const double state) const
+        double drift(const date_t& time, const double state) const
         {
             return doDrift(time, state);
         }
 
-        double diffusion(const date_type& time, const double state) const
+        double diffusion(const date_t& time, const double state) const
         {
             return doDiffusion(time, state);
         }
 
         boost::shared_ptr<ISde> clone() const
         {
-            return boost::shared_ptr<ISde>(doClone());
+            return boost::shared_ptr<ISde>(this->doClone());
         }
 
     private:
-        virtual double doDrift(const date_type& time, const double state) 
-            const = 0;
+        virtual double doDrift(
+            const date_t& time, const double state) const = 0;
 
-        virtual double doDiffusion(const date_type& time, const double state) 
-            const = 0;
+        virtual double doDiffusion(
+            const date_t& time, const double state) const = 0;
 
         virtual ISde* doClone() const = 0;
 
@@ -48,16 +48,16 @@ namespace finance {
 
         boost::shared_ptr<LogNormalSde> clone() const
         {
-            return boost::shared_ptr<LogNormalSde>(doClone());
+            return boost::shared_ptr<LogNormalSde>(this->doClone());
         }
 
     private:
-        virtual double doDrift(const date_type& time, const double state) const
+        virtual double doDrift(const date_t& time, const double state) const
         {
             return _mu(time) * state;
         }
 
-        virtual double doDiffusion(const date_type& time, const double state) 
+        virtual double doDiffusion(const date_t& time, const double state) 
             const
         {
             return _sigma(time) * state;
@@ -82,16 +82,16 @@ namespace finance {
 
         boost::shared_ptr<NormalSde> clone() const
         {
-            return boost::shared_ptr<NormalSde>(doClone());
+            return boost::shared_ptr<NormalSde>(this->doClone());
         }
 
     private:
-        virtual double doDrift(const date_type& time, const double state) const
+        virtual double doDrift(const date_t& time, const double state) const
         {
             return _mu(time);
         }
 
-        virtual double doDiffusion(const date_type& time, const double state) 
+        virtual double doDiffusion(const date_t& time, const double state) 
             const
         {
             return _sigma(time);

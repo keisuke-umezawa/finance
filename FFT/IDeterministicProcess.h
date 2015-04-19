@@ -4,24 +4,25 @@
 #include <boost/date_time/gregorian/gregorian_types.hpp>
 
 namespace finance {
-    typedef boost::gregorian::date date_type;
+    typedef boost::gregorian::date date_t;
 
     class IDeterministicProcess {
     public:
         virtual ~IDeterministicProcess() {}
 
-        double operator()(const date_type& time) const
+        double operator()(const date_t& time) const
         {
-            return doOperator(time);
+            return apply(time);
         }
 
         boost::shared_ptr<IDeterministicProcess> clone() const
         {
-            return boost::shared_ptr<IDeterministicProcess>(doClone());
+            return boost::shared_ptr<IDeterministicProcess>(
+                 this->doClone());
         }
 
     private:
-        virtual double doOperator(const date_type& time) const = 0;
+        virtual double apply(const date_t& time) const = 0;
 
         virtual IDeterministicProcess* doClone() const = 0;
 
@@ -30,7 +31,7 @@ namespace finance {
     class ConstantProcess : public IDeterministicProcess {
     public:
         explicit ConstantProcess(const double constant)
-        : _constant(constant)
+        : _value(constant)
         {
         }
 
@@ -38,13 +39,13 @@ namespace finance {
 
         boost::shared_ptr<ConstantProcess> clone() const
         {
-            return boost::shared_ptr<ConstantProcess>(doClone());
+            return boost::shared_ptr<ConstantProcess>(this->doClone());
         }
 
     private:
-        virtual double doOperator(const date_type& time) const
+        virtual double apply(const date_t& time) const
         {
-            return _constant;
+            return _value;
         }
 
         virtual ConstantProcess* doClone() const
@@ -52,7 +53,7 @@ namespace finance {
             return new ConstantProcess(*this);
         }
 
-        const double _constant;
+        const double _value;
     };
 
 } // namespace finance
