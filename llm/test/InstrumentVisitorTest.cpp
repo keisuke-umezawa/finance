@@ -8,10 +8,10 @@
 #include <gtest/gtest.h>
 #include <stdexcept>
 #include <iostream>
-#include "../src/fwd.h"
-#include "../src/Instrument.h"
-#include "../src/InstrumentVisitor.h"
-#include "../src/InstrumentAccepter.h"
+#include "fwd.h"
+#include "Instrument.h"
+#include "InstrumentVisitor.h"
+#include "InstrumentAccepter.h"
 
 namespace ublas = boost::numeric::ublas;
 

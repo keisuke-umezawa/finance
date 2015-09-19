@@ -14,9 +14,9 @@
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
-#include "../src/fwd.h"
-#include "../src/RebonatoLiborMarketModel.h"
-#include "../src/numeric.h"
+#include "fwd.h"
+#include "RebonatoLiborMarketModel.h"
+#include "numeric.h"
 
 
 namespace {

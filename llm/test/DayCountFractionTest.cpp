@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "../src/fwd.h"
-#include "../src/DayCountFraction.h"
+#include "fwd.h"
+#include "DayCountFraction.h"
 
 TEST(DayCountFractionTest, testDayCountAct365) {
     const lmm::date_t start(2014, 2, 3);

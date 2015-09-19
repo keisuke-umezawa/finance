@@ -10,8 +10,8 @@
 #include <iostream>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/io.hpp>
-#include "../src/fwd.h"
-#include "../src/invert.h"
+#include "fwd.h"
+#include "invert.h"
 
 TEST(InvertTest, invert) {
     const ublas::matrix<double> m(ublas::identity_matrix<double>(4));

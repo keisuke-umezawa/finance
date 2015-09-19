@@ -8,7 +8,7 @@
 #include <gtest/gtest.h>
 #include <stdexcept>
 #include <iostream>
-#include "../src/BlackScholesFormulas.h"
+#include "BlackScholesFormulas.h"
 
 TEST(BlackScholesFomulasTest, testImpliedBlackVolatility) {
     const double forward = 0.1;

@@ -13,9 +13,9 @@
 #include <boost/make_shared.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
-#include "../src/fwd.h"
-#include "../src/YieldCurve.h"
-#include "../src/DayCountFraction.h"
+#include "fwd.h"
+#include "YieldCurve.h"
+#include "DayCountFraction.h"
 
 TEST(YieldCurveTest, testConstantRateYieldCurve) {
     const lmm::date_t start(2014, 2, 3);

@@ -8,8 +8,8 @@
 #include <gtest/gtest.h>
 #include <stdexcept>
 #include <iostream>
-#include "../src/fwd.h"
-#include "../src/Tenor.h"
+#include "fwd.h"
+#include "Tenor.h"
 
 namespace {
     const lmm::date_t today(2015, 5, 9);

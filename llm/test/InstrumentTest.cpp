@@ -9,9 +9,9 @@
 #include <iostream>
 #include <boost/ptr_container/ptr_vector.hpp>
 #include <boost/numeric/ublas/vector.hpp>
-#include "../src/fwd.h"
-#include "../src/Instrument.h"
-#include "../src/InstrumentAdapter.h"
+#include "fwd.h"
+#include "Instrument.h"
+#include "InstrumentAdapter.h"
 
 namespace ublas = boost::numeric::ublas;
 
