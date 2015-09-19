@@ -41,11 +41,11 @@ namespace lmm {
         TenorUnit _unit;
     };
 
-    date_t addDays(const date_t& date, const std::size_t n);
+    date_t addDays(const date_t& date, const int n);
 
-    date_t addMonths(const date_t& date, const std::size_t n);
+    date_t addMonths(const date_t& date, const int n);
 
-    date_t addYears(const date_t& date, const std::size_t n);
+    date_t addYears(const date_t& date, const int n);
 
     date_t addTenor(const date_t& date, const Tenor& tenor);
 }  // namespace lmm
