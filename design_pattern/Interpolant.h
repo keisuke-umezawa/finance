@@ -1,9 +1,9 @@
 #ifndef INTERPOLANT_H_INCLUDED
 #define INTERPOLANT_H_INCLUDED
 
-#include "Fwd.h"
 #include <limits>
 #include <boost/shared_ptr.hpp>
+#include "fwd.h"
 
 namespace design_pattern {
 
@@ -13,7 +13,7 @@ namespace design_pattern {
 
         boost::shared_ptr<Interpolant> clone() const
         {
-            return boost::shared_ptr<Interpolant>(doClone());
+            return boost::shared_ptr<Interpolant>(this->doClone());
         }
 
         virtual const double operator()(const double x) const = 0;
@@ -30,35 +30,14 @@ namespace design_pattern {
     public:
         virtual ~LinearInterpolant() {}
 
-        virtual const double operator()(const double x) const
-        {
-            double previousAbscissa = std::numeric_limits<double>::min();
-            double previousOrdinate = _ordinates(0);
-            for (std::size_t i = 0; i < _abscissas.size(); ++i) {
-                if (x < _abscissas(i)) {
-                    return previousOrdinate 
-                        + (_ordinates(i) - previousOrdinate) * (x - previousAbscissa)
-                            / (_abscissas(i) - previousAbscissa);
-                }
-                previousAbscissa = _abscissas(i);
-                previousOrdinate = _ordinates(i);
-            }
-            return _ordinates(_ordinates.size() - 1);
-        }
+        virtual const double operator()(const double x) const;
 
         virtual void init(
             const ublas::vector<double>& ordinates,
-            const ublas::vector<double>& abscissas)
-        {
-            _ordinates = ordinates;
-            _abscissas = abscissas;
-        }
+            const ublas::vector<double>& abscissas);
 
     private:
-        virtual LinearInterpolant* doClone() const
-        {
-            return new LinearInterpolant(*this);
-        }
+        virtual LinearInterpolant* doClone() const;
 
     private:
         ublas::vector<double> _ordinates;

@@ -1,29 +1,47 @@
 #ifndef INTERPOLANTDECORATOR_H_INCLUDED
 #define INTERPOLANTDECORATOR_H_INCLUDED
 
-#include "Fwd.h"
 #include <boost/shared_ptr.hpp>
+#include "fwd.h"
+#include "Interpolant.h"
 
 namespace design_pattern {
 
     class InterpolantDecorator : public Interpolant {
     public:
+        InterpolantDecorator(boost::shared_ptr<Interpolant>& interpolantPtr)
+        : _interpolantPtr(interpolantPtr->clone())
+        {
+        }
+
         virtual ~InterpolantDecorator() {}
 
-        virtual const double operator()(const double x) const = 0;
+        virtual const double operator()(const double x) const
+        {
+            return (*_interpolantPtr)(x);
+        }
 
         virtual void init(
             const ublas::vector<double>& ordinates,
-            const ublas::vector<double>& abscissas) = 0;
+            const ublas::vector<double>& abscissas)
+        {
+            _interpolantPtr->init(ordinates, abscissas);
+        }
 
     private:
         virtual InterpolantDecorator* doClone() const = 0;
-    };
 
+    private:
+        boost::shared_ptr<Interpolant> _interpolantPtr;
+    };
+}
+
+namespace design_pattern {
     class LogInterpolantDecorator : public InterpolantDecorator {
     public:
-        LogInterpolantDecorator(boost::shared_ptr<Interpolant> ptrInterpolant)
-        : _ptrInterpolant(ptrInterpolant)
+        LogInterpolantDecorator(
+            const boost::shared_ptr<Interpolant>& interpolantPtr)
+        : InterpolantDecorator(interpolantPtr->clone())
         {
         }
 
@@ -31,34 +49,22 @@ namespace design_pattern {
 
         virtual const double operator()(const double x) const
         {
-            return std::exp((*_ptrInterpolant)(x));
+            return std::exp(InterpolantDecorator::operator()(x));
         }
 
         virtual void init(
             const ublas::vector<double>& ordinates,
-            const ublas::vector<double>& abscissas)
-        {
-            ublas::vector<double> logOrdinates(ordinates.size(), 0.0);
-            for (std::size_t i = 0; i < ordinates.size(); ++i) {
-                logOrdinates(i) = std::log(ordinates(i));
-            }
-            _ptrInterpolant->init(logOrdinates, abscissas);
-        }
+            const ublas::vector<double>& abscissas);
 
     private:
-        virtual LogInterpolantDecorator* doClone() const
-        {
-            return new LogInterpolantDecorator(*this);
-        }
-
-    private:
-        boost::shared_ptr<Interpolant> _ptrInterpolant;
+        virtual LogInterpolantDecorator* doClone() const;        
     };
 
     class ExpInterpolantDecorator : public InterpolantDecorator {
     public:
-        ExpInterpolantDecorator(boost::shared_ptr<Interpolant> ptrInterpolant)
-        : _ptrInterpolant(ptrInterpolant)
+        ExpInterpolantDecorator(
+            const boost::shared_ptr<Interpolant>& interpolantPtr)
+        : InterpolantDecorator(interpolantPtr->clone())
         {
         }
 
@@ -66,29 +72,67 @@ namespace design_pattern {
 
         virtual const double operator()(const double x) const
         {
-            return std::log((*_ptrInterpolant)(x));
+            return std::log(InterpolantDecorator::operator()(x));
         }
 
         virtual void init(
             const ublas::vector<double>& ordinates,
-            const ublas::vector<double>& abscissas)
+            const ublas::vector<double>& abscissas);
+
+    private:
+        virtual ExpInterpolantDecorator* doClone() const;
+    };
+
+    class MaxInterpolantDecorator : public InterpolantDecorator {
+    public:
+        MaxInterpolantDecorator(
+            const boost::shared_ptr<Interpolant>& interpolantPtr,
+            const double floor)
+        : InterpolantDecorator(interpolantPtr->clone()), _floor(floor)
         {
-            ublas::vector<double> expOrdinates(ordinates.size(), 0.0);
-            for (std::size_t i = 0; i < ordinates.size(); ++i) {
-                expOrdinates(i) = std::exp(ordinates(i));
-            }
-            _ptrInterpolant->init(expOrdinates, abscissas);
+        }
+
+        virtual ~MaxInterpolantDecorator() {}
+
+        virtual const double operator()(const double x) const
+        {
+            return std::max(InterpolantDecorator::operator()(x), _floor);
         }
 
     private:
-        virtual ExpInterpolantDecorator* doClone() const
-        {
-            return new ExpInterpolantDecorator(*this);
-        }
+        virtual MaxInterpolantDecorator* doClone() const;
 
     private:
-        boost::shared_ptr<Interpolant> _ptrInterpolant;
+        const double _floor;
     };
 }
 
+namespace design_pattern {
+    class ConstantExtrapolationDecorator : public InterpolantDecorator {
+    public:
+        ConstantExtrapolationDecorator(
+            const boost::shared_ptr<Interpolant>& interpolantPtr)
+        : InterpolantDecorator(interpolantPtr->clone())
+        {
+        }
+
+        virtual ~ConstantExtrapolationDecorator() {}
+
+        virtual const double operator()(const double x) const;
+
+        virtual void init(
+            const ublas::vector<double>& ordinates,
+            const ublas::vector<double>& abscissas);
+
+    private:
+        virtual ConstantExtrapolationDecorator* doClone() const;
+
+    private:
+        double _maxOrdinate;
+        double _maxAbscissa;
+        double _minOrdinate;
+        double _minAbscissa;
+    };
+
+}
 #endif // INTERPOLANTDECORATOR_H_INCLUDED

@@ -171,11 +171,19 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\CalcDiscountFactor.cpp"
+				RelativePath=".\Interpolant.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\main.cpp"
+				RelativePath=".\InterpolantDecorator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\InterpolantMixin.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\main_prototype.cpp"
 				>
 			</File>
 		</Filter>
@@ -185,11 +193,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\CalcDiscountFactor.h"
+				RelativePath=".\ContractTypeDefinitions.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Fwd.h"
+				RelativePath=".\fwd.h"
 				>
 			</File>
 			<File
@@ -201,19 +209,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\IrDataBuilder.h"
+				RelativePath=".\InterpolantMixin.h"
 				>
 			</File>
 			<File
-				RelativePath=".\MarketData.h"
-				>
-			</File>
-			<File
-				RelativePath=".\MarketDataSet.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Parser.h"
+				RelativePath=".\InterpolantPrototypeFactory.h"
 				>
 			</File>
 			<File

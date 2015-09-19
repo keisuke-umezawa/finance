@@ -5,7 +5,7 @@
 #include <vector>
 #include <fstream>
 #include <boost/tokenizer.hpp>
-#include "Fwd.h"
+#include "fwd.h"
 #include "IrDataBuilder.h"
 
 namespace design_pattern {

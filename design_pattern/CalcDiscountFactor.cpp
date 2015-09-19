@@ -1,5 +1,5 @@
 #include <boost/shared_ptr.hpp>
-#include "Fwd.h"
+#include "fwd.h"
 #include "IrDataBuilder.h"
 #include "Parser.h"
 #include "YieldCurve.h"

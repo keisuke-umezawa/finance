@@ -3,7 +3,7 @@
 
 
 #include <boost/shared_ptr.hpp>
-#include "Fwd.h"
+#include "fwd.h"
 #include "MarketData.h"
 #include "MarketDataSet.h"
 #include "YieldCurve.h"
@@ -22,7 +22,7 @@ namespace design_pattern {
             boost::shared_ptr<YieldCurve> ptrYield
                 = createInstance();
 
-            MarketDataSet dataset;
+            YieldCurveDataSet dataset;
 
             for (std::size_t i = 0; i < depositeRates.size(); ++i) {
                 setDepositeRate(dataset, depositeRates[i]);
@@ -43,17 +43,17 @@ namespace design_pattern {
         //Factory Method
         virtual boost::shared_ptr<YieldCurve> createInstance() const = 0;
 
-        virtual void setDepositeRate(MarketDataSet& dataset,
+        virtual void setDepositeRate(YieldCurveDataSet& dataset,
             const DepositeRateMarketData& depositeRate) const = 0;
 
-        virtual void setForwardRate(MarketDataSet& dataset,
+        virtual void setForwardRate(YieldCurveDataSet& dataset,
             const ForwardRateAgreementMarketData& forwardRate) const = 0;
 
-        virtual void setSwapRate(MarketDataSet& dataset,
+        virtual void setSwapRate(YieldCurveDataSet& dataset,
             const SwapRateMarketData& swapRate) const = 0;
 
         virtual void build(boost::shared_ptr<YieldCurve>& yield,
-            const MarketDataSet& dataset) const = 0;
+            const YieldCurveDataSet& dataset) const = 0;
     };
 
     class LiborYieldCurveCreator : public YieldCurveCreator {
@@ -66,28 +66,28 @@ namespace design_pattern {
             return boost::shared_ptr<YieldCurve>(new LiborYieldCurve());
         }
 
-        virtual void setDepositeRate(MarketDataSet& dataset,
+        virtual void setDepositeRate(YieldCurveDataSet& dataset,
             const DepositeRateMarketData& depositeRate) const
         {
             // dataset.insert(depositeRate);
         }
 
-        virtual void setForwardRate(MarketDataSet& dataset,
+        virtual void setForwardRate(YieldCurveDataSet& dataset,
             const ForwardRateAgreementMarketData& forwardRate) const
         {
             // dataset.insert(forwardRate);
         }
 
-        virtual void setSwapRate(MarketDataSet& dataset,
+        virtual void setSwapRate(YieldCurveDataSet& dataset,
             const SwapRateMarketData& swapRate) const
         {
             // dataset.insert(swapRate);
         }
 
         virtual void build(boost::shared_ptr<YieldCurve>& yield,
-            const MarketDataSet& dataset) const
+            const YieldCurveDataSet& dataset) const
         {
-            yield->setMarketDataSet(dataset);
+            yield->setYieldCurveDataSet(dataset);
             yield->build();
         }
     };
@@ -102,21 +102,21 @@ namespace design_pattern {
             return boost::shared_ptr<YieldCurve>(new OisYieldCurve());
         }
 
-        virtual void setDepositeRate(MarketDataSet& dataset,
+        virtual void setDepositeRate(YieldCurveDataSet& dataset,
             const DepositeRateMarketData& depositeRate) const
         {
             // some process for OisYieldCurve
             // dataset.insert(depositeRate);
         }
 
-        virtual void setForwardRate(MarketDataSet& dataset,
+        virtual void setForwardRate(YieldCurveDataSet& dataset,
             const ForwardRateAgreementMarketData& forwardRate) const
         {
             // some process for OisYieldCurve
             // dataset.insert(forwardRate);
         }
 
-        virtual void setSwapRate(MarketDataSet& dataset,
+        virtual void setSwapRate(YieldCurveDataSet& dataset,
             const SwapRateMarketData& swapRate) const
         {
             // some process for OisYieldCurve
@@ -124,9 +124,9 @@ namespace design_pattern {
         }
 
         virtual void build(boost::shared_ptr<YieldCurve>& yield,
-            const MarketDataSet& dataset) const
+            const YieldCurveDataSet& dataset) const
         {
-            yield->setMarketDataSet(dataset);
+            yield->setYieldCurveDataSet(dataset);
             yield->build();
         }
     };
