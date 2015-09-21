@@ -6,6 +6,7 @@
 #include <boost/make_shared.hpp>
 #include <boost/function.hpp>
 #include "fwd.h"
+#include "LinearInterpolant.h"
 
 namespace lmm {
 
@@ -19,9 +20,14 @@ namespace lmm {
         }
 
         virtual const double discountFactor(
-            const date_t& start, const date_t& end) const = 0;
+            const date_t& start, const date_t& end) const
+        {
+            return doDiscountFactor(start, end);
+        }
 
     private:
+        virtual const double doDiscountFactor(
+            const date_t& start, const date_t& end) const = 0;
         virtual IYieldCurve* doClone() const = 0;
     };
 
@@ -34,14 +40,12 @@ namespace lmm {
         }
 
         virtual ~ConstantRateYieldCurve() {}
-
-        virtual const double discountFactor(
+    private:
+        virtual const double doDiscountFactor(
             const date_t& start, const date_t& end) const
         {
             return std::exp(-_rate * _dayCountFraction(start, end));
         }
-
-    private:
         virtual ConstantRateYieldCurve* doClone() const
         {
             return new ConstantRateYieldCurve(*this);
@@ -52,6 +56,33 @@ namespace lmm {
         const boost::function<double(date_t, date_t)> _dayCountFraction;
     };
         
+    class PiecewiseYieldCurve : public IYieldCurve {
+    public:
+        PiecewiseYieldCurve(const IInterpolant& interpolant)
+            : _interpolant(interpolant.clone())
+        {
+
+        }
+        virtual ~PiecewiseYieldCurve() {}
+
+    private:
+        virtual const double doDiscountFactor(
+            const date_t& start, const date_t& end) const
+        {
+            return (*_interpolant)(end) / (*_interpolant)(start);
+        }
+        virtual PiecewiseYieldCurve* doClone() const
+        {
+            return new PiecewiseYieldCurve(*this);
+        }
+    private:
+        const boost::shared_ptr<const IInterpolant> _interpolant;
+    };
+
+    boost::shared_ptr<IYieldCurve> makeLinearYieldCurve(
+        const date_t& today,
+        const ublas::vector<date_t>& dates,
+        const ublas::vector<double>& discountFactors);
 } // namespace lmm {
 
 #endif // YIELDCURVE_H_INCLUDED

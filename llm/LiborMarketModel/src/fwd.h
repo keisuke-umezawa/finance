@@ -9,6 +9,8 @@
 #define FWD_H_INCLUDED
 
 #include <boost/numeric/ublas/fwd.hpp>
+#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/matrix.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 
 namespace ublas = boost::numeric::ublas;

@@ -163,11 +163,13 @@
     <ClCompile Include="src\PiecewiseConstantLiborMarketModel.cpp" />
     <ClCompile Include="src\RebonatoLiborMarketModel.cpp" />
     <ClCompile Include="src\Tenor.cpp" />
+    <ClCompile Include="src\YieldCurve.cpp" />
     <ClCompile Include="test\BlackScholesFomulasTest.cpp" />
     <ClCompile Include="test\DayCountFractionTest.cpp" />
     <ClCompile Include="test\InstrumentTest.cpp" />
     <ClCompile Include="test\InstrumentVisitorTest.cpp" />
     <ClCompile Include="test\InvertTest.cpp" />
+    <ClCompile Include="test\LinearInterpolantTest.cpp" />
     <ClCompile Include="test\main.cpp" />
     <ClCompile Include="test\NumericTest.cpp" />
     <ClCompile Include="test\PiecewiseConstantLiborMarketModelForSwaptionTest.cpp" />
@@ -188,6 +190,7 @@
     <ClInclude Include="src\InstrumentAdapter.h" />
     <ClInclude Include="src\InstrumentVisitor.h" />
     <ClInclude Include="src\invert.h" />
+    <ClInclude Include="src\LinearInterpolant.h" />
     <ClInclude Include="src\ModelParameter.h" />
     <ClInclude Include="src\Normals.h" />
     <ClInclude Include="src\numeric.h" />
@@ -195,6 +198,7 @@
     <ClInclude Include="src\RebonatoLiborMarketModel.h" />
     <ClInclude Include="src\Tenor.h" />
     <ClInclude Include="src\YieldCurve.h" />
+    <ClInclude Include="test\DiscountFactorTestData.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test\MarketData.ipp" />

@@ -15,7 +15,9 @@
 #include <boost/bind.hpp>
 #include "fwd.h"
 #include "YieldCurve.h"
+#include "LinearInterpolant.h"
 #include "DayCountFraction.h"
+#include "DiscountFactorTestData.h"
 
 TEST(YieldCurveTest, testConstantRateYieldCurve) {
     const lmm::date_t start(2014, 2, 3);
@@ -28,4 +30,32 @@ TEST(YieldCurveTest, testConstantRateYieldCurve) {
         = boost::make_shared<lmm::ConstantRateYieldCurve>(
             rate, dayCountFractoion);
     ASSERT_DOUBLE_EQ(std::exp(-rate), yieldCurve->discountFactor(start, end));
+}
+
+TEST(YieldCurveTest, testPiecewiseYieldCurve) {
+    const boost::shared_ptr<const lmm::IYieldCurve> yieldCurve
+        = lmm::makeLinearYieldCurve(
+            test_lmm::DiscountFactorTestData::today(),
+            test_lmm::DiscountFactorTestData::dates(),
+            test_lmm::DiscountFactorTestData::discountFactors());
+    {
+        ASSERT_DOUBLE_EQ(1.0, yieldCurve->discountFactor(
+            test_lmm::DiscountFactorTestData::today(),
+            test_lmm::DiscountFactorTestData::today()));
+    }
+    {
+        const lmm::date_t start(2006, 1, 1);
+        ASSERT_DOUBLE_EQ(1.0, yieldCurve->discountFactor(
+            start, start));
+    }
+    {
+        const std::size_t index = 5;
+        const lmm::date_t start
+            = test_lmm::DiscountFactorTestData::today();
+        const lmm::date_t end
+            = test_lmm::DiscountFactorTestData::dates()(index);
+        const double expected
+            = test_lmm::DiscountFactorTestData::discountFactors()(index);
+        ASSERT_DOUBLE_EQ(expected, yieldCurve->discountFactor(start, end));
+    }
 }
