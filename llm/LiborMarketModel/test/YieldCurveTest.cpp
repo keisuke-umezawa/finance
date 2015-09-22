@@ -34,7 +34,7 @@ TEST(YieldCurveTest, testConstantRateYieldCurve) {
 
 TEST(YieldCurveTest, testPiecewiseYieldCurve) {
     const boost::shared_ptr<const lmm::IYieldCurve> yieldCurve
-        = lmm::makeLinearYieldCurve(
+        = lmm::makePiecewiseYieldCurve<lmm::LinearInterpolant>(
             test_lmm::DiscountFactorTestData::today(),
             test_lmm::DiscountFactorTestData::dates(),
             test_lmm::DiscountFactorTestData::discountFactors());
@@ -56,6 +56,35 @@ TEST(YieldCurveTest, testPiecewiseYieldCurve) {
             = test_lmm::DiscountFactorTestData::dates()(index);
         const double expected
             = test_lmm::DiscountFactorTestData::discountFactors()(index);
+        ASSERT_DOUBLE_EQ(expected, yieldCurve->discountFactor(start, end));
+    }
+}
+
+TEST(YieldCurveTest, testLinearYieldCurveByRegression) {
+    const boost::shared_ptr<const lmm::IYieldCurve> yieldCurve
+        = lmm::makePiecewiseYieldCurve<lmm::LinearInterpolant>(
+            test_lmm::DiscountFactorTestData::today(),
+            test_lmm::DiscountFactorTestData::dates(),
+            test_lmm::DiscountFactorTestData::discountFactors());
+    {
+        const lmm::date_t start
+            = test_lmm::DiscountFactorTestData::today();
+        const lmm::date_t end(2007, 7, 25); // 2Y6M
+        const double expected = 0.9363837304109589; // 0.9369436;
+        ASSERT_DOUBLE_EQ(expected, yieldCurve->discountFactor(start, end));
+    }
+}
+TEST(YieldCurveTest, testLogLinearYieldCurveByRegression) {
+    const boost::shared_ptr<const lmm::IYieldCurve> yieldCurve
+        = lmm::makePiecewiseYieldCurve<lmm::LogLinearInterpolant>(
+            test_lmm::DiscountFactorTestData::today(),
+            test_lmm::DiscountFactorTestData::dates(),
+            test_lmm::DiscountFactorTestData::discountFactors());
+    {
+        const lmm::date_t start
+            = test_lmm::DiscountFactorTestData::today();
+        const lmm::date_t end(2007, 7, 25); // 2Y6M
+        const double expected = 0.93627153502286697; 
         ASSERT_DOUBLE_EQ(expected, yieldCurve->discountFactor(start, end));
     }
 }

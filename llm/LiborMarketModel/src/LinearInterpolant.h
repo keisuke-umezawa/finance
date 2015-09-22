@@ -9,6 +9,8 @@
 #define LINEARINTERPOLANT_H_INCLUDED
 
 #include <algorithm>
+#include <cmath>
+#include <functional>
 #include "fwd.h"
 
 namespace lmm {
@@ -67,6 +69,35 @@ namespace lmm {
     private:
         const ublas::vector<date_t> _abscissas;
         const ublas::vector<double> _ordinates;
+    };
+    // ------------------------------------------------------------------------
+    // LogLinearInterpolant
+    // ------------------------------------------------------------------------
+    class LogLinearInterpolant : public IInterpolant {
+    public:
+        virtual ~LogLinearInterpolant() {}
+
+        LogLinearInterpolant(const ublas::vector<date_t>& abscissas,
+            const ublas::vector<double>& ordinates)
+        : _linearInterpolant()
+        {
+            ublas::vector<double> copyOrdinates(ordinates.size(), 0.0);
+            std::transform(ordinates.begin(), ordinates.end(),
+                copyOrdinates.begin(), std::ptr_fun<double, double>(std::log));
+            _linearInterpolant = boost::make_shared<LinearInterpolant>(
+                abscissas, copyOrdinates);
+        }
+    private:
+        virtual const double doOperator(const date_t& x) const
+        {
+            return std::exp((*_linearInterpolant)(x));
+        }
+        virtual IInterpolant* doClone() const
+        {
+            return new LogLinearInterpolant(*this);
+        }
+    private:
+        boost::shared_ptr<LinearInterpolant> _linearInterpolant;
     };
 
 }  // namespace llm

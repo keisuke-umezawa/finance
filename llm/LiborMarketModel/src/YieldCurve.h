@@ -79,10 +79,19 @@ namespace lmm {
         const boost::shared_ptr<const IInterpolant> _interpolant;
     };
 
-    boost::shared_ptr<IYieldCurve> makeLinearYieldCurve(
+    template <typename Interpolant> inline
+    boost::shared_ptr<IYieldCurve> makePiecewiseYieldCurve(
         const date_t& today,
         const ublas::vector<date_t>& dates,
-        const ublas::vector<double>& discountFactors);
+        const ublas::vector<double>& discountFactors)
+    {
+        ublas::vector<date_t> copyDates(dates);
+        copyDates.insert_element(0, today);
+        ublas::vector<double> copyDfs(discountFactors);
+        copyDfs.insert_element(0, 1.0);
+        return boost::make_shared<PiecewiseYieldCurve>(
+            Interpolant(copyDates, copyDfs));
+    }
 } // namespace lmm {
 
 #endif // YIELDCURVE_H_INCLUDED
