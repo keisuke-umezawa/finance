@@ -6,10 +6,9 @@
  */
 
 #include <gtest/gtest.h>
-#include <stdexcept>
-#include <iostream>
 #include "fwd.h"
 #include "Tenor.h"
+#include "DiscountFactorTestData.h"
 
 namespace {
     const lmm::date_t today(2015, 5, 9);
@@ -35,4 +34,17 @@ TEST(TenorTest, addTenorByMonth) {
 TEST(TenorTest, addTenorByYear) {
     ASSERT_EQ(lmm::date_t(2018, 5, 9),
         lmm::addTenor(today, lmm::Tenor(3, lmm::TenorUnit::Year)));
+}
+
+TEST(TenorTest, makeTenorDatesTest) {
+    const lmm::Tenor periods(3, lmm::TenorUnit::Month);
+    const lmm::Tenor termination(20, lmm::TenorUnit::Year);
+    ublas::vector<lmm::date_t> dates
+        = lmm::makeTenorDates(
+            test_lmm::DiscountFactorTestData::today(),
+            periods, termination);
+    ASSERT_EQ(addTenor(test_lmm::DiscountFactorTestData::today(), periods),
+        dates(0));
+    ASSERT_EQ(addTenor(test_lmm::DiscountFactorTestData::today(), termination),
+        *dates.crbegin());
 }

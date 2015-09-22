@@ -48,6 +48,9 @@ namespace lmm {
     date_t addYears(const date_t& date, const int n);
 
     date_t addTenor(const date_t& date, const Tenor& tenor);
+    
+    ublas::vector<date_t> makeTenorDates(const date_t& start,
+        const Tenor& periods, const Tenor& termination);
 }  // namespace lmm
 
 

@@ -6,6 +6,8 @@
 namespace lmm {
     double dayCountAct365(const date_t& start,
             const date_t& end);
+    double dayCountAct360(const date_t& start,
+            const date_t& end);
 } // namespace lmm
 
 #endif // DAYCOUNTFRACTION_H_INCLUDED

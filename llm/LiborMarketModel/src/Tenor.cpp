@@ -40,7 +40,19 @@ namespace lmm {
         }
         return date;
     }
-
+    ublas::vector<date_t> makeTenorDates(const date_t& start,
+        const Tenor& periods, const Tenor& termination)
+    {
+        std::vector<date_t> dates(0);
+        const date_t terminationDate = addTenor(start, termination);
+        dates.push_back(addTenor(start, periods));
+        while (*dates.rbegin() < terminationDate) {
+            dates.push_back(addTenor(*dates.crbegin(), periods));
+        }
+        ublas::vector<date_t> v(dates.size());
+        std::copy(dates.begin(), dates.end(), v.begin());
+        return v;
+    }
 }  // namespace lmm
 
 

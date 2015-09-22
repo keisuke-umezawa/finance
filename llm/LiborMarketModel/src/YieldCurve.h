@@ -59,9 +59,13 @@ namespace lmm {
     class PiecewiseYieldCurve : public IYieldCurve {
     public:
         PiecewiseYieldCurve(const IInterpolant& interpolant)
-            : _interpolant(interpolant.clone())
+        : _interpolant(interpolant.clone())
         {
 
+        }
+        PiecewiseYieldCurve(const PiecewiseYieldCurve& other)
+        : _interpolant(other._interpolant->clone())
+        {
         }
         virtual ~PiecewiseYieldCurve() {}
 
