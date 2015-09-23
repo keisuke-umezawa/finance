@@ -18,20 +18,22 @@
 #include "PiecewiseConstantLiborMarketModel.h"
 #include "RebonatoLiborMarketModel.h"
 #include "numeric.h"
+#include "CapClosedFormula.h"
+#include "StripCapletVolatilities.h"
 
 namespace {
 #include "MarketData.ipp"
 }
 
 TEST(PiecewiseConstantLiborMarketModel, initialize) {
-    const ublas::vector<double> capletVolatilities
-        = lmm::makeCapletVolatilities(
-            today, dates, liborForwardRates, capStrikes, capVolatilities);
+    //const ublas::vector<double> capletVolatilities
+    //    = lmm::makeCapletVolatilities(
+    //        today, dates, liborForwardRates, capStrikes, capVolatilities);
 
-    ublas::matrix<double> piecewiseConstantVolatilities
-        = lmm::calcPiecewiseConstantVolatilities(today, dates,
-            capletVolatilities);
+    //ublas::matrix<double> piecewiseConstantVolatilities
+    //    = lmm::calcPiecewiseConstantVolatilities(today, dates,
+    //        capletVolatilities);
 
-    std::cout << capletVolatilities << std::endl;
-    std::cout << piecewiseConstantVolatilities << std::endl;
+    //std::cout << capletVolatilities << std::endl;
+    //std::cout << piecewiseConstantVolatilities << std::endl;
 }

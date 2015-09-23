@@ -47,7 +47,6 @@ namespace lmm {
         const date_t _start;
         const ublas::vector<date_t> _dates;
         ublas::vector<double> _rates;
-
     };
 
 }  // namespace llm

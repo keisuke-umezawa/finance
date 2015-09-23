@@ -26,9 +26,9 @@ namespace lmm {
 
     void PremiumPricer::doVisit(const CapletAccepter& accepter)
     {
-        const lmm::Caplet& caplet = accepter.caplet();
-        _premium = BlackFormula(_rate, caplet.strike(), _volatility,
-            dayCountAct365(caplet.start(), caplet.end()));
+        //const lmm::Caplet& caplet = accepter.caplet();
+        //_premium = BlackFormula(_rate, caplet.strike(), _volatility,
+        //    dayCountAct365(caplet.start(), caplet.end()));
     }
 
     void PremiumPricer::doVisit(const CapAccepter& accepter)

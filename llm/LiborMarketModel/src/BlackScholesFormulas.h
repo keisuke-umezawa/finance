@@ -2,24 +2,24 @@
 #define BLACK_SCHOLES_FORMULAS_H_INCLUDED
 
 namespace lmm {
-    double BlackScholesCall(
+    double calculateBlackScholesCall(
         double Spot, double Strike, double r, double d,
         double Vol, double Expiry);
-    double BlackScholesPut(
+    double calculateBlackScholesPut(
         double Spot, double Strike, double r, double d,
         double Vol, double Expiry);
-    double BlackScholesDigitalCall(
+    double calculateBlackScholesDigitalCall(
         double Spot, double Strike, double r, double d,
         double Vol, double Expiry);
-    double BlackScholesDigitalPut(
+    double calculateBlackScholesDigitalPut(
         double Spot, double Strike, double r, double d,
         double Vol, double Expiry);
-    double BlackScholesCallVega(
+    double calculateBlackScholesCallVega(
         double Spot, double Strike, double r, double d,
         double Vol, double Expiry);
-    double BlackFormula(
+    double calculateBlackFormula(
         double forward, double Strike, double Vol, double Expiry);
-    double ImpliedBlackVolatility(double forward, double Strike,
+    double calculateImpliedBlackVolatility(double forward, double Strike,
         double premium, double Expiry);
 }
 

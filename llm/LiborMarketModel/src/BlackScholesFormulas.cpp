@@ -7,7 +7,7 @@
 #include "numeric.h"
 
 namespace lmm {
-    double BlackScholesCall(
+    double calculateBlackScholesCall(
         double spot, double strike, double r, double d, double vol, double maturity)
     {
         double standardDeviation = vol * std::sqrt(maturity);
@@ -20,7 +20,7 @@ namespace lmm {
             - strike * std::exp(-r * maturity) * CumulativeNormal(d2);
     }
 
-    double BlackScholesPut(
+    double calculateBlackScholesPut(
         double spot, double strike, double r, double d, double vol, double maturity)
     {
         double standardDeviation = vol * std::sqrt(maturity);
@@ -33,7 +33,7 @@ namespace lmm {
             - spot * std::exp(-d * maturity) * (1.0 - CumulativeNormal(d1));
     }
 
-    double BlackScholesDigitalCall(
+    double calculateBlackScholesDigitalCall(
         double spot, double strike, double r, double d, double vol, double maturity)
     {
         double standardDeviation = vol * std::sqrt(maturity);
@@ -44,7 +44,7 @@ namespace lmm {
         return std::exp(-r * maturity) * CumulativeNormal(d2);
     }
 
-    double BlackScholesDigitalPut(
+    double calculateBlackScholesDigitalPut(
         double spot, double strike, double r, double d, double vol, double maturity)
     {
         double standardDeviation = vol * std::sqrt(maturity);
@@ -55,7 +55,7 @@ namespace lmm {
         return std::exp(-r * maturity) * (1.0 - CumulativeNormal(d2));
     }
 
-    double BlackScholesCallVega(
+    double calculateBlackScholesCallVega(
         double spot, double strike, double r, double d, double vol, double maturity)
     {
         double standardDeviation = vol * std::sqrt(maturity);
@@ -66,7 +66,7 @@ namespace lmm {
         return spot * std::exp(-d * maturity) * std::sqrt(maturity) * NormalDensity(d1);
     }
 
-    double BlackFormula(double forward, double strike, double vol, double maturity)
+    double calculateBlackFormula(double forward, double strike, double vol, double maturity)
     {
         double standardDeviation = vol * std::sqrt(maturity);
         double moneyness = std::log(forward / strike);
@@ -77,12 +77,12 @@ namespace lmm {
         return forward * CumulativeNormal(d1) - strike * CumulativeNormal(d2);
     }
 
-    double ImpliedBlackVolatility(
+    double calculateImpliedBlackVolatility(
         double forward, double strike, double premium, double maturity)
     {
         const boost::function<double(double)> f
             = numeric::makeTargetFunction(
-                boost::bind(&lmm::BlackFormula, forward, strike, _1, maturity),
+                boost::bind(&lmm::calculateBlackFormula, forward, strike, _1, maturity),
                 premium);
         const double volatility = numeric::newton(f,
             std::sqrt(2.0 * M_PI / maturity) * premium / forward, 1000, 1e-10);

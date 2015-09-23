@@ -15,9 +15,11 @@ TEST(BlackScholesFomulasTest, testImpliedBlackVolatility) {
     const double strike = 0.1;
     const double expiry = 1.0;
     const double volatility = 1.0;
-    const double premium = lmm::BlackFormula(forward, strike, volatility, expiry);
+    const double premium 
+        = lmm::calculateBlackFormula(forward, strike, volatility, expiry);
 
     const double impliedVolatility =
-        lmm::ImpliedBlackVolatility(forward, strike, premium, expiry);
+        lmm::calculateImpliedBlackVolatility(
+            forward, strike, premium, expiry);
     ASSERT_NEAR(volatility, impliedVolatility, 1e-10);
 }

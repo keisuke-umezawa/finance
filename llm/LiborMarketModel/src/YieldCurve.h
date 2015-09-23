@@ -24,7 +24,6 @@ namespace lmm {
         {
             return doDiscountFactor(start, end);
         }
-
     private:
         virtual const double doDiscountFactor(
             const date_t& start, const date_t& end) const = 0;
@@ -96,6 +95,9 @@ namespace lmm {
         return boost::make_shared<PiecewiseYieldCurve>(
             Interpolant(copyDates, copyDfs));
     }
+
+    const double forwardRate(const IYieldCurve& yieldCurve,
+        const date_t& today, const date_t& start, const date_t& end);
 } // namespace lmm {
 
 #endif // YIELDCURVE_H_INCLUDED

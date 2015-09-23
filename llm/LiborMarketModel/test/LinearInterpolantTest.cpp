@@ -1,10 +1,3 @@
-/*
- * TenorTest.cpp
- *
- *  Created on: 2015/05/11
- *      Author: Keisuke
- */
-
 #include <gtest/gtest.h>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
@@ -13,7 +6,7 @@
 #include "DiscountFactorTestData.h"
 
 
-TEST(TenorTest, constructLinearInterpolant) {
+TEST(LinearInterpolantTest, constructLinearInterpolant) {
     const lmm::LinearInterpolant interpolant(
             test_lmm::DiscountFactorTestData::dates(),
             test_lmm::DiscountFactorTestData::discountFactors());

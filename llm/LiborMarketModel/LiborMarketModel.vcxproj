@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\BlackScholesFormulas.cpp" />
+    <ClCompile Include="src\CapClosedFormula.cpp" />
     <ClCompile Include="src\DayCountFraction.cpp" />
     <ClCompile Include="src\Instrument.cpp" />
     <ClCompile Include="src\InstrumentAccepter.cpp" />
@@ -166,17 +167,15 @@
     <ClCompile Include="src\Tenor.cpp" />
     <ClCompile Include="src\YieldCurve.cpp" />
     <ClCompile Include="test\BlackScholesFomulasTest.cpp" />
+    <ClCompile Include="test\CapClosedFormulaTest.cpp" />
     <ClCompile Include="test\DayCountFractionTest.cpp" />
     <ClCompile Include="test\InstrumentTest.cpp" />
-    <ClCompile Include="test\InstrumentVisitorTest.cpp" />
     <ClCompile Include="test\InvertTest.cpp" />
     <ClCompile Include="test\LinearInterpolantTest.cpp" />
     <ClCompile Include="test\main.cpp" />
     <ClCompile Include="test\NumericTest.cpp" />
     <ClCompile Include="test\PiecewiseConstantLiborMarketModelForSwaptionTest.cpp" />
     <ClCompile Include="test\PiecewiseConstantLiborMarketModelTest.cpp" />
-    <ClCompile Include="test\RebonatoLiborMarketModelTest.cpp" />
-    <ClCompile Include="test\SampleTest.cpp" />
     <ClCompile Include="test\SwapRateCalclatorTest.cpp" />
     <ClCompile Include="test\TenorTest.cpp" />
     <ClCompile Include="test\YieldCurveTest.cpp" />
@@ -184,6 +183,7 @@
   <ItemGroup>
     <ClInclude Include="src\BlackScholesFormulas.h" />
     <ClInclude Include="src\Calibrator.h" />
+    <ClInclude Include="src\CapClosedFormula.h" />
     <ClInclude Include="src\ClosedForm.h" />
     <ClInclude Include="src\DayCountFraction.h" />
     <ClInclude Include="src\fwd.h" />
@@ -203,7 +203,7 @@
     <ClInclude Include="src\Tenor.h" />
     <ClInclude Include="src\YieldCurve.h" />
     <ClInclude Include="test\DiscountFactorTestData.h" />
-    <ClInclude Include="test\YiledCurveMock.h" />
+    <ClInclude Include="test\YieldCurveMock.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test\MarketData.ipp" />

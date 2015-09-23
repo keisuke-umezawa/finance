@@ -1,13 +1,4 @@
-/*
- * YieldCurveTest.cpp
- *
- *  Created on: 2015/05/15
- *      Author: Keisuke
- */
-
-#include <gtest/gtest.h>
-#include <stdexcept>
-#include <iostream>
+#include <gmock/gmock.h>
 #include <cmath>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
@@ -15,9 +6,13 @@
 #include <boost/bind.hpp>
 #include "fwd.h"
 #include "YieldCurve.h"
+#include "YieldCurveMock.h"
 #include "LinearInterpolant.h"
 #include "DayCountFraction.h"
 #include "DiscountFactorTestData.h"
+
+using ::testing::_;
+using ::testing::Invoke;
 
 TEST(YieldCurveTest, testConstantRateYieldCurve) {
     const lmm::date_t start(2014, 2, 3);
@@ -84,7 +79,18 @@ TEST(YieldCurveTest, testLogLinearYieldCurveByRegression) {
         const lmm::date_t start
             = test_lmm::DiscountFactorTestData::today();
         const lmm::date_t end(2007, 7, 25); // 2Y6M
-        const double expected = 0.93627153502286697; 
+        const double expected = 0.93627153502286697;
         ASSERT_DOUBLE_EQ(expected, yieldCurve->discountFactor(start, end));
     }
+}
+TEST(YieldCurveTest, testForwardRate) {
+    const test_lmm::YieldCurveMock yieldCurve;
+    EXPECT_CALL(yieldCurve, doDiscountFactor(_, _))
+        .WillRepeatedly(Invoke(test_lmm::returnZeroOver6Months));
+    const lmm::date_t today(2000, 1, 1);
+    const lmm::date_t start = lmm::addMonths(today, 3);
+    const lmm::date_t end = lmm::addMonths(today, 6);
+    const double expected = 1.0 / lmm::dayCountAct360(start, end);
+    ASSERT_DOUBLE_EQ(expected, 
+        lmm::forwardRate(yieldCurve, today, start, end));
 }
