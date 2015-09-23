@@ -8,40 +8,55 @@
 #ifndef REBONATOLIBORMARKETMODEL_H_INCLUDED
 #define REBONATOLIBORMARKETMODEL_H_INCLUDED
 
-#include <cmath>
+#include <algorithm>
 #include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
+#include <boost/numeric/ublas/vector_proxy.hpp>
 #include "fwd.h"
-#include "YieldCurve.h"
-#include "DayCountFraction.h"
 #include "BlackScholesFormulas.h"
+#include "YieldCurve.h"
+#include "Tenor.h"
+#include "LinearInterpolant.h"
+#include "SwapRateCalculator.h"
 #include "CapClosedFormula.h"
 
 namespace lmm {
-    ublas::vector<double> makeCapletVolatilities(
+    ublas::vector<double> stripCapletVolatilities(
+        const IYieldCurve& yieldCurve,
         const date_t& today,
-        const ublas::vector<date_t>& dates,
-        const ublas::vector<double>& liborForwardRates,
-        const ublas::vector<double>& capStrikes,
-        const ublas::vector<double>& capVolatilities,
-        const IYieldCurve& yieldCurve)
+        const Tenor& periods,   
+        const Tenor& termination,
+        const IInterpolant& capVolatilityInterpolant)
     {
-        ublas::vector<double> capletVolatilities(capVolatilities);
-        //for (std::size_t i = 0; i < capVolatilities.size(); ++i) {
-        //    double capPremium = calcBlackScholesCapPrice(
-        //        i, today, dates, liborForwardRates,
-        //        capStrikes, capVolatilities);
-        //    double capletPremium = calcBlackScholesCapletsPrice(
-        //        i, today, dates, liborForwardRates,
-        //        capStrikes, capletVolatilities);
-        //    const double maturity = dayCountAct365(today, dates(i));
-        //    const double tenor = dayCountAct365(dates(i), dates(i + 1));
-        //    capletVolatilities(i) = ImpliedBlackVolatility(
-        //        liborForwardRates(i), capStrikes(i),
-        //        (capPremium - capletPremium)
-        //            / (yieldCurve.discountFactor(dates(i), dates(i + 1))),
-        //        maturity);
-        //}
+        const ublas::vector<date_t> dates
+            = makeTenorDates(today, periods, termination);
+        const lmm::SwapRateCalculator calculator(yieldCurve, today, dates);
+        ublas::vector<double> capletVolatilities(dates.size() - 1);
+        ublas::vector<double> swapRates(dates.size() - 1);
+        for (std::size_t i = 0; i + 1 < dates.size(); ++i) {
+            const date_t& start = dates(i);
+            const date_t& end = dates(i + 1);
+            const double swapRate = calculator.get(end);
+            const double capVol = capVolatilityInterpolant(end);
+
+            double capPremium = calculateBsCapPrice(
+                yieldCurve, yieldCurve, swapRate, capVol, today, 
+                ublas::subrange(dates, 0, i + 2));
+            double capletPremium = calculateBsCapletsPrice(
+                yieldCurve, yieldCurve,
+                swapRate,
+                ublas::subrange(capletVolatilities, 0, i),
+                today,
+                ublas::subrange(dates, 0, i + 1));
+            const double maturity = dayCountAct360(today, start);
+            capletVolatilities(i) = calculateImpliedBlackVolatility(
+                forwardRate(yieldCurve, today, start, end), 
+                swapRate,
+                (capPremium - capletPremium)
+                / (yieldCurve.discountFactor(today, start)
+                    * dayCountAct360(start, end)),
+                maturity);
+            swapRates(i) = swapRate;
+        }
         return capletVolatilities;
     }
 }  // namespace lmm

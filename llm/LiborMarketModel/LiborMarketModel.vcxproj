@@ -176,11 +176,13 @@
     <ClCompile Include="test\NumericTest.cpp" />
     <ClCompile Include="test\PiecewiseConstantLiborMarketModelForSwaptionTest.cpp" />
     <ClCompile Include="test\PiecewiseConstantLiborMarketModelTest.cpp" />
+    <ClCompile Include="test\StripCapletVolatilitiesTest.cpp" />
     <ClCompile Include="test\SwapRateCalclatorTest.cpp" />
     <ClCompile Include="test\TenorTest.cpp" />
     <ClCompile Include="test\YieldCurveTest.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="linalg\vector_proxy.h" />
     <ClInclude Include="src\BlackScholesFormulas.h" />
     <ClInclude Include="src\Calibrator.h" />
     <ClInclude Include="src\CapClosedFormula.h" />
@@ -202,6 +204,8 @@
     <ClInclude Include="src\SwapRateCalculator.h" />
     <ClInclude Include="src\Tenor.h" />
     <ClInclude Include="src\YieldCurve.h" />
+    <ClInclude Include="test\CapTestData.h" />
+    <ClInclude Include="test\DateTestData.h" />
     <ClInclude Include="test\DiscountFactorTestData.h" />
     <ClInclude Include="test\YieldCurveMock.h" />
   </ItemGroup>

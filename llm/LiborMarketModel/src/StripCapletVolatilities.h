@@ -8,16 +8,18 @@
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include "fwd.h"
+#include "Tenor.h"
 #include "YieldCurve.h"
+#include "LinearInterpolant.h"
 
 namespace lmm {
 
-    ublas::vector<double> makeCapletVolatilities(
-        const date_t& today,
-        const ublas::vector<date_t>& dates,
+    ublas::vector<double> stripCapletVolatilities(
         const IYieldCurve& yieldCurve,
-        const ublas::vector<double>& capStrikes,
-        const ublas::vector<double>& capVolatililies);
+        const date_t& today,
+        const Tenor& periods,
+        const Tenor& termination,
+        const IInterpolant& capVolatilityInterpolant);
 
 }  // namespace lmm
 

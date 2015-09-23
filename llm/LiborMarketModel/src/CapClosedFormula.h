@@ -13,13 +13,6 @@
 #include "YieldCurve.h"
 
 namespace lmm {
-    double calcBlackScholesCapPrice(
-        const std::size_t settlementIndex,
-        const date_t& today,
-        const ublas::vector<date_t>& dates,
-        const ublas::vector<double>& liborForwardRates,
-        const ublas::vector<double>& strikes,
-        const ublas::vector<double>& capVolatililies);
     const double calculateBsCapletPrice(
         const IYieldCurve& yieldCurve,
         const double forwardRate,
@@ -28,6 +21,20 @@ namespace lmm {
         const date_t& today,
         const date_t& start,
         const date_t& end);
+    const double calculateBsCapletsPrice(
+        const IYieldCurve& yieldCurve,
+        const IYieldCurve& forwardCurve,
+        const double strike,
+        const ublas::vector<double>& volatilities,
+        const date_t& today,
+        const ublas::vector<date_t>& dates);
+    const double calculateBsCapPrice(
+        const IYieldCurve& yieldCurve,
+        const IYieldCurve& forwardCurve,
+        const double strike,
+        const double volatility,
+        const date_t& today,
+        const ublas::vector<date_t>& dates);
 }  // namespace lmm
 
 

@@ -2,6 +2,8 @@
 #define SWAPRATECALCULATOR_H_INCLUDED
 
 #include <algorithm>
+#include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 #include "fwd.h"
 #include "YieldCurve.h"
 #include "Tenor.h"
@@ -12,41 +14,32 @@ namespace lmm {
     public:
         SwapRateCalculator(
             const IYieldCurve& yieldCurve, const date_t& start,
-            const Tenor& periods, const Tenor& termination)
-        : _start(start), 
-            _dates(makeTenorDates(start, periods, termination)),
-            _rates(_dates.size(), 0.0)
+            const ublas::vector<date_t>& dates)
+        : _interpolant()
         {
+            ublas::vector<double> rates(dates.size(), 0.0);
             const double firstDiscountFactor
-                = yieldCurve.discountFactor(start, _dates(0));
+                = yieldCurve.discountFactor(start, dates(0));
             double sum = 0.0;
-            for (std::size_t i = 1; i < _rates.size(); ++i) {
+            for (std::size_t i = 1; i < rates.size(); ++i) {
                 const double df
-                    = yieldCurve.discountFactor(start, _dates(i));
-                sum += df * dayCountAct360(_dates(i - 1), _dates(i));
-                _rates(i) 
+                    = yieldCurve.discountFactor(start, dates(i));
+                sum += df * dayCountAct360(dates(i - 1), dates(i));
+                rates(i) 
                     = (firstDiscountFactor 
-                        - yieldCurve.discountFactor(start, _dates(i)))
+                        - yieldCurve.discountFactor(start, dates(i)))
                         / sum;
             }
+            _interpolant = boost::make_shared<LinearInterpolant>(
+                dates, rates);
         }
-        const double get(const Tenor& key) const
+        const double get(const date_t& key) const
         {
-            const date_t keyDate = addTenor(_start, key);
-            if (std::find(_dates.begin(), _dates.end(), keyDate) 
-                    == _dates.end()) {
-                return 0.0;
-            }
-            const std::size_t index
-                = std::find(_dates.begin(), _dates.end(), keyDate) 
-                    - _dates.begin();
-            return _rates(index);
+            return (*_interpolant)(key);
         }
 
     private:
-        const date_t _start;
-        const ublas::vector<date_t> _dates;
-        ublas::vector<double> _rates;
+        boost::shared_ptr<LinearInterpolant> _interpolant;
     };
 
 }  // namespace llm

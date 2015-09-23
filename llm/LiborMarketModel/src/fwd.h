@@ -10,6 +10,7 @@
 
 #include <boost/numeric/ublas/fwd.hpp>
 #include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/io.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 
