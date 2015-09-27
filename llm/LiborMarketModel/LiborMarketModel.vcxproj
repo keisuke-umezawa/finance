@@ -103,7 +103,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./src;./test;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./src;./test;./;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,7 +142,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>./src;./test;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./src;./test;./;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,6 +156,7 @@
     <ClCompile Include="src\BlackScholesFormulas.cpp" />
     <ClCompile Include="src\CapClosedFormula.cpp" />
     <ClCompile Include="src\DayCountFraction.cpp" />
+    <ClCompile Include="src\DiscountFactorRatio.cpp" />
     <ClCompile Include="src\Instrument.cpp" />
     <ClCompile Include="src\InstrumentAccepter.cpp" />
     <ClCompile Include="src\InstrumentVisitor.cpp" />
@@ -175,7 +176,7 @@
     <ClCompile Include="test\main.cpp" />
     <ClCompile Include="test\NumericTest.cpp" />
     <ClCompile Include="test\PiecewiseConstantLiborMarketModelForSwaptionTest.cpp" />
-    <ClCompile Include="test\PiecewiseConstantLiborMarketModelTest.cpp" />
+    <ClCompile Include="test\DiscountFactorRatioTest.cpp" />
     <ClCompile Include="test\StripCapletVolatilitiesTest.cpp" />
     <ClCompile Include="test\SwapRateCalclatorTest.cpp" />
     <ClCompile Include="test\TenorTest.cpp" />
@@ -188,13 +189,14 @@
     <ClInclude Include="src\CapClosedFormula.h" />
     <ClInclude Include="src\ClosedForm.h" />
     <ClInclude Include="src\DayCountFraction.h" />
+    <ClInclude Include="src\DiscountFactorRatio.h" />
     <ClInclude Include="src\fwd.h" />
     <ClInclude Include="src\Instrument.h" />
     <ClInclude Include="src\InstrumentAccepter.h" />
     <ClInclude Include="src\InstrumentAdapter.h" />
     <ClInclude Include="src\InstrumentVisitor.h" />
     <ClInclude Include="src\invert.h" />
-    <ClInclude Include="src\LinearInterpolant.h" />
+    <ClInclude Include="src\Interpolant.h" />
     <ClInclude Include="src\ModelParameter.h" />
     <ClInclude Include="src\Normals.h" />
     <ClInclude Include="src\numeric.h" />
@@ -207,6 +209,8 @@
     <ClInclude Include="test\CapTestData.h" />
     <ClInclude Include="test\DateTestData.h" />
     <ClInclude Include="test\DiscountFactorTestData.h" />
+    <ClInclude Include="test\SwaptionTestData.h" />
+    <ClInclude Include="test\InterpolantMock.h" />
     <ClInclude Include="test\YieldCurveMock.h" />
   </ItemGroup>
   <ItemGroup>

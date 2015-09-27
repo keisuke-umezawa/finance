@@ -21,11 +21,14 @@ namespace lmm {
 
     class Tenor {
     public:
+        Tenor()
+        : _number(0), _unit(TenorUnit::Day)
+        {
+        }
         Tenor(const std::size_t number, const TenorUnit unit)
         : _number(number), _unit(unit)
         {
         }
-
         const std::size_t number() const
         {
             return _number;
@@ -34,6 +37,11 @@ namespace lmm {
         const TenorUnit unit() const
         {
             return _unit;
+        }
+        friend bool operator==(const Tenor& lhs, const Tenor& rhs)
+        {
+            return lhs._number == rhs._number
+                && lhs._unit == rhs._unit;
         }
 
     private:

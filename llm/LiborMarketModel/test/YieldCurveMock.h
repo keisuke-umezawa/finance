@@ -2,8 +2,10 @@
 #include "fwd.h"
 #include "YieldCurve.h"
 #include "Tenor.h"
+#include "DayCountFraction.h"
 
 using ::testing::_;
+using ::testing::Return;
 using ::testing::Invoke;
 
 namespace test_lmm {
@@ -17,6 +19,11 @@ namespace test_lmm {
             return 0.5;
         }
         return 1.0;
+    }
+    inline double returnConstantDiscountFactor(
+        const lmm::date_t& start, const lmm::date_t& end)
+    {
+        return std::exp(-0.01 * lmm::dayCountAct360(start, end));
     }
 
     class YieldCurveMock : public lmm::IYieldCurve {

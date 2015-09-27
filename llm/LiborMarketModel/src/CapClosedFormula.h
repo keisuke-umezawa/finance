@@ -1,10 +1,3 @@
-/*
- * RebonatoLiborMarketModel.h
- *
- *  Created on: 2015/05/26
- *      Author: Keisuke
- */
-
 #ifndef CAPCLOSEDFORMULA_H_INCLUDED
 #define CAPCLOSEDFORMULA_H_INCLUDED
 

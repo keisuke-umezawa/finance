@@ -15,7 +15,7 @@
 #include "BlackScholesFormulas.h"
 #include "YieldCurve.h"
 #include "Tenor.h"
-#include "LinearInterpolant.h"
+#include "Interpolant.h"
 #include "SwapRateCalculator.h"
 #include "CapClosedFormula.h"
 

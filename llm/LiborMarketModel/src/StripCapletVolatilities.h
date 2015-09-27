@@ -10,7 +10,7 @@
 #include "fwd.h"
 #include "Tenor.h"
 #include "YieldCurve.h"
-#include "LinearInterpolant.h"
+#include "Interpolant.h"
 
 namespace lmm {
 

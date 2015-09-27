@@ -7,7 +7,7 @@
 #include "fwd.h"
 #include "YieldCurve.h"
 #include "YieldCurveMock.h"
-#include "LinearInterpolant.h"
+#include "Interpolant.h"
 #include "DayCountFraction.h"
 #include "DiscountFactorTestData.h"
 

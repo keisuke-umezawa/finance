@@ -2,7 +2,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 #include "fwd.h"
-#include "LinearInterpolant.h"
+#include "Interpolant.h"
 #include "DiscountFactorTestData.h"
 
 

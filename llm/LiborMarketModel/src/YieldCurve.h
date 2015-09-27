@@ -6,7 +6,7 @@
 #include <boost/make_shared.hpp>
 #include <boost/function.hpp>
 #include "fwd.h"
-#include "LinearInterpolant.h"
+#include "Interpolant.h"
 
 namespace lmm {
 
