@@ -1,9 +1,3 @@
-/*
- * numeric.h
- *
- *  Created on: 2015/06/07
- *      Author: Keisuke
- */
 
 #ifndef NUMERIC_H_INCLUDED
 #define NUMERIC_H_INCLUDED
@@ -12,7 +6,7 @@
 #include <boost/numeric/ublas/io.hpp>
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
-#include "invert.h"
+#include "numeric/invert.h"
 #include "fwd.h"
 
 namespace numeric {

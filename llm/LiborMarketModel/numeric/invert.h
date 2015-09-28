@@ -1,5 +1,5 @@
 /*
- * numeric.h
+ * numeric/numeric.h
  *
  *  Created on: 2015/05/27
  *      Author: Keisuke

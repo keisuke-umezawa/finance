@@ -59,6 +59,9 @@ namespace lmm {
     
     ublas::vector<date_t> makeTenorDates(const date_t& start,
         const Tenor& periods, const Tenor& termination);
+
+    const std::size_t toIndex(
+        const Tenor& tenor, const ublas::vector<Tenor>& tenors);
 }  // namespace lmm
 
 

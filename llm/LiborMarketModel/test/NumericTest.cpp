@@ -16,7 +16,7 @@
 #include <boost/numeric/ublas/io.hpp>
 #include "fwd.h"
 #include "RebonatoLiborMarketModel.h"
-#include "numeric.h"
+#include "numeric/numeric.h"
 
 TEST(NumericTest, integralRebonatoVolatilityFormula) {
     const std::size_t divisionSize = 1000000;

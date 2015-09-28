@@ -4,7 +4,7 @@
 #include <boost/function.hpp>
 #include "BlackScholesFormulas.h"
 #include "Normals.h"
-#include "numeric.h"
+#include "numeric/numeric.h"
 
 namespace lmm {
     double calculateBlackScholesCall(

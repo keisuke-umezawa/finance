@@ -53,6 +53,12 @@ namespace lmm {
         std::copy(dates.begin(), dates.end(), v.begin());
         return v;
     }
+    const std::size_t toIndex(
+        const Tenor& tenor, const ublas::vector<Tenor>& tenors)
+    {
+        return std::find(tenors.begin(), tenors.end(), tenor)
+            - tenors.begin();
+    }
 }  // namespace lmm
 
 

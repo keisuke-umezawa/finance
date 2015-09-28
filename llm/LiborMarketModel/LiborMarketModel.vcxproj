@@ -108,7 +108,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>gtestd.lib;gmock.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>tmglibd.lib;blasd.lib;libf2cd.lib;lapackd.lib;gtestd.lib;gmock.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>$(OutDir)$(TargetName)$(TargetExt)</Command>
@@ -149,10 +149,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>gtest.lib;gmock.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>tmglib.lib;blas.lib;libf2c.lib;lapack.lib;gtest.lib;gmock.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="numeric\eigen.cpp" />
+    <ClCompile Include="numeric\numeric.cpp" />
     <ClCompile Include="src\BlackScholesFormulas.cpp" />
     <ClCompile Include="src\CapClosedFormula.cpp" />
     <ClCompile Include="src\DayCountFraction.cpp" />
@@ -161,10 +163,10 @@
     <ClCompile Include="src\InstrumentAccepter.cpp" />
     <ClCompile Include="src\InstrumentVisitor.cpp" />
     <ClCompile Include="src\Normals.cpp" />
-    <ClCompile Include="src\numeric.cpp" />
     <ClCompile Include="src\PiecewiseConstantLiborMarketModel.cpp" />
     <ClCompile Include="src\RebonatoLiborMarketModel.cpp" />
     <ClCompile Include="src\StripCapletVolatilities.cpp" />
+    <ClCompile Include="src\SwaptionCovariance.cpp" />
     <ClCompile Include="src\Tenor.cpp" />
     <ClCompile Include="src\YieldCurve.cpp" />
     <ClCompile Include="test\BlackScholesFomulasTest.cpp" />
@@ -179,11 +181,14 @@
     <ClCompile Include="test\DiscountFactorRatioTest.cpp" />
     <ClCompile Include="test\StripCapletVolatilitiesTest.cpp" />
     <ClCompile Include="test\SwapRateCalclatorTest.cpp" />
+    <ClCompile Include="test\SwaptionCovarianceTest.cpp" />
     <ClCompile Include="test\TenorTest.cpp" />
     <ClCompile Include="test\YieldCurveTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="linalg\vector_proxy.h" />
+    <ClInclude Include="numeric\eigen.h" />
+    <ClInclude Include="numeric\numeric.h" />
     <ClInclude Include="src\BlackScholesFormulas.h" />
     <ClInclude Include="src\Calibrator.h" />
     <ClInclude Include="src\CapClosedFormula.h" />
@@ -195,15 +200,15 @@
     <ClInclude Include="src\InstrumentAccepter.h" />
     <ClInclude Include="src\InstrumentAdapter.h" />
     <ClInclude Include="src\InstrumentVisitor.h" />
-    <ClInclude Include="src\invert.h" />
+    <ClInclude Include="numeric\invert.h" />
     <ClInclude Include="src\Interpolant.h" />
     <ClInclude Include="src\ModelParameter.h" />
     <ClInclude Include="src\Normals.h" />
-    <ClInclude Include="src\numeric.h" />
     <ClInclude Include="src\PiecewiseConstantLiborMarketModel.h" />
     <ClInclude Include="src\RebonatoLiborMarketModel.h" />
     <ClInclude Include="src\StripCapletVolatilities.h" />
     <ClInclude Include="src\SwapRateCalculator.h" />
+    <ClInclude Include="src\SwaptionCovariance.h" />
     <ClInclude Include="src\Tenor.h" />
     <ClInclude Include="src\YieldCurve.h" />
     <ClInclude Include="test\CapTestData.h" />

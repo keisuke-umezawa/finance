@@ -1,12 +1,7 @@
-/*
- * numeric.cpp
- *
- *  Created on: 2015/06/07
- *      Author: Keisuke
- */
 
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
+#include "numeric/numeric.h"
 
 namespace numeric {
 

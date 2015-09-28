@@ -17,7 +17,7 @@
 #include "fwd.h"
 #include "PiecewiseConstantLiborMarketModel.h"
 #include "RebonatoLiborMarketModel.h"
-#include "numeric.h"
+#include "numeric/numeric.h"
 
 namespace {
 #include "SwaptionData.ipp"
